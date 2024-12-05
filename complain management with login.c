@@ -272,16 +272,7 @@ file = fopen("complaints.dat", "ab");
 
                 }
 
-
-
-
-    }
-
-
-
-
-
-
+        }
 
     fwrite(&complaint, sizeof(Complaint), 1, file);
     printf("Complaint added successfully!\n");
@@ -298,7 +289,7 @@ void viewComplaints()
     FILE *file;
 
 
-file = fopen("complaints.dat", "rb");
+     file = fopen("complaints.dat", "rb");
 
         if (file == NULL)
        {
@@ -379,80 +370,7 @@ void adminMenu() {
 }
 
 
-void modifyComplaint()
-{
-    Complaint complaint;
-    FILE *file, *tempFile;
-    int complaint_id, found = 0;
 
-
-file = fopen("complaints.dat", "rb");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }
-    if (file == NULL)
-    {
-        printf("Error: No complaints found or file cannot be opened!\n");
-        return;
-    }
-
-
-    tempFile = fopen("temp.dat", "wb");
-    if (tempFile == NULL)
-    {
-        printf("Error opening temporary file!\n");
-        fclose(file);
-        return;
-    }
-
-
-    printf("Enter the Complaint ID to modify: ");
-scanf("%d", &complaint_id);
-    if (scanf("%d", &complaint_id) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }
-
-
-    while (fread(&complaint, sizeof(Complaint), 1, file))
-    {
-        if (complaint.complaint_id == complaint_id)
-        {
-            found = 1;
-
-
-            printf("Modifying Complaint ID: %d\n", complaint_id);
-
-
-            printf("Complaint modified successfully!\n");
-        }
-
-
-        fwrite(&complaint, sizeof(Complaint), 1, tempFile);
-    }
-
-
-    fclose(file);
-    fclose(tempFile);
-
-
-remove("complaints.dat");
-    if (remove("complaints.dat") != 0) {
-        perror("Error deleting the original file");
-        return;
-    }
-rename("temp.dat", "complaints.dat");
-    if (rename("temp.dat", "complaints.dat") != 0) {
-        perror("Error renaming the temporary file");
-        return;
-    }
-
-    if (!found)
-    {
-        printf("Invalid request: Complaint ID %d not found!\n", complaint_id);
-    }
-}
 
 void deleteComplaint()
 {
@@ -460,8 +378,8 @@ void deleteComplaint()
     FILE *file, *tempFile;
     int complaint_id, found = 0;
 
-    // Open the original file in read mode
-file = fopen("complaints.dat", "rb");
+
+    file = fopen("complaints.dat", "rb");
 
     if (file == NULL)
     {
@@ -501,9 +419,9 @@ file = fopen("complaints.dat", "rb");
     fclose(tempFile);
 
 
-remove("complaints.dat");
+    remove("complaints.dat");
 
-rename("temp.dat", "complaints.dat");
+    rename("temp.dat", "complaints.dat");
 
 
     if (!found)
@@ -520,40 +438,32 @@ void searchComplaint()
     char search_category[20], search_status[20];
 
 
-file = fopen("complaints.dat", "rb");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }
+    file = fopen("complaints.dat", "rb");
+
     if (file == NULL)
     {
         printf("Error: No complaints found or file cannot be opened!\n");
         return;
     }
 
-    // Display search options
+
     printf("Search Complaint by:\n");
     printf("1. Complaint ID\n");
     printf("2. Student ID\n");
-    printf("3. Complaint Category\n");
-    printf("4. Complaint Status\n");
+
+
     printf("Enter your choice: ");
-scanf("%d", &choice);
-    if (scanf("%d", &choice) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }
+    scanf("%d", &choice);
+
 
     switch (choice)
     {
     case 1:
 
         printf("Enter Complaint ID: ");
-scanf("%d", &search_id);
-    if (scanf("%d", &search_id) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }
+         scanf("%d", &search_id);
+
+
         while (fread(&complaint, sizeof(Complaint), 1, file))
         {
             if (complaint.complaint_id == search_id)
@@ -577,11 +487,9 @@ scanf("%d", &search_id);
     case 2:
 
         printf("Enter Student ID: ");
-scanf("%d", &search_id);
-    if (scanf("%d", &search_id) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }
+        scanf("%d", &search_id);
+
+
         while (fread(&complaint, sizeof(Complaint), 1, file))
         {
             if (complaint.student_id == search_id)
@@ -648,82 +556,7 @@ scanf("%d", &search_id);
     fclose(file);
 }
 
-void changeComplaintStatus()
-{
-    Complaint complaint;
-    FILE *file, *tempFile;
-    int complaint_id, found = 0;
-    char new_status[20];
 
-    file = fopen("complaints.dat", "rb");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }
-    if (file == NULL)
-    {
-        printf("Error: No complaints found or file cannot be opened!\n");
-        return;
-    }
-
-
-    tempFile = fopen("temp.dat", "wb");
-    if (tempFile == NULL)
-    {
-        printf("Error opening temporary file!\n");
-        fclose(file);
-        return;
-    }
-
-
-    printf("Enter the Complaint ID to change status: ");
-scanf("%d", &complaint_id);
-    if (scanf("%d", &complaint_id) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }
-
-
-    while (fread(&complaint, sizeof(Complaint), 1, file))
-    {
-        if (complaint.complaint_id == complaint_id)
-        {
-            found = 1;
-            printf("Current Status: %s\n", complaint.status);
-            printf("Enter new status: ");
-            getchar();
-            fgets(new_status, sizeof(new_status), stdin);
-            new_status[strcspn(new_status, "\n")] = 0;
-
-
-            strcpy(complaint.status, new_status);
-            printf("Status updated successfully!\n");
-        }
-
-
-        fwrite(&complaint, sizeof(Complaint), 1, tempFile);
-    }
-
-    fclose(file);
-    fclose(tempFile);
-
-
-remove("complaints.dat");
-    if (remove("complaints.dat") != 0) {
-        perror("Error deleting the original file");
-        return;
-    }
-rename("temp.dat", "complaints.dat");
-    if (rename("temp.dat", "complaints.dat") != 0) {
-        perror("Error renaming the temporary file");
-        return;
-    }
-
-    if (!found)
-    {
-        printf("Invalid request: Complaint ID %d not found!\n", complaint_id);
-    }
-}
 
 void generateReport()
 {
@@ -807,9 +640,9 @@ void displayMenu()
 {
     printf("\n University Complaint Management System \n");
     printf("1. Add Complaint \n");
-    printf("2. Modify Complaint \n");
-    printf("3. Search Complaint \n");
-    printf("4. Exit\n");
+    //printf("2. Modify Complaint \n");
+    printf("2. Search Complaint \n");
+    printf("3. Exit\n");
     printf("Enter your choice: \n\n");
     printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 }
@@ -942,15 +775,13 @@ void complaintManagementSystem()
         case 1:
             addComplaint();
             break;
+
+
+
         case 2:
-            modifyComplaint();
-            break;
-
-
-        case 3:
             searchComplaint();
             break;
-        case 4:
+        case 3:
             printf("Exiting the system.\n");
             return;
         default:
