@@ -8,15 +8,17 @@
 #define FILE_NAME "accounts.txt"
 #define COMPLAINT_FILE "complaints.txt"
 #define MAX_LEN 50
+#define ADMIN_USERNAME "admin"
+#define ADMIN_PASSWORD "admin123"
 
-// int flag = 0 ;
+
 
 typedef struct {
     char username[MAX_LEN];
     char password[MAX_LEN];
 } Account;
 
-// Defining the Complaint structure
+
 typedef struct
 {
     int complaint_id;
@@ -34,30 +36,30 @@ typedef struct
 
 } Complaint;
 
-// Function to check if a year is a leap year
+
 bool isLeapYear(int year) {
     return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 }
 
-// Function to check if a date is valid
-bool isValidDate(int date) {
-    // Extract day, month, and year from the single variable
-    int day = date / 1000000;           // Extract the first two digits (dd)
-    int month = (date / 10000) % 100;   // Extract the middle two digits (mm)
-    int year = date % 10000;            // Extract the last four digits (yyyy)
 
-    // Check if year is within the valid range
+bool isValidDate(int date) {
+
+    int day = date / 1000000;
+    int month = (date / 10000) % 100;
+    int year = date % 10000;
+
+
     if ((year <= 2024) && (year >= 2025))
         return true;
 
-    // Days in each month (non-leap year)
+
     int daysInMonth[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    // Adjust February for leap years
+
     if (isLeapYear(year))
         daysInMonth[2] = 29;
 
-    // Validate month and day
+
     if ((month <= 1) || (month >= 12))
         return true;
     if ((day <= 1) || (day > daysInMonth[month]))
@@ -76,7 +78,7 @@ int addComplaint()
     Complaint complaint;
     FILE *file;
 
-    // Open the file in append mode
+
 file = fopen("complaints.dat", "ab");
     if (file == NULL) {
         perror("Error opening file");
@@ -88,19 +90,10 @@ file = fopen("complaints.dat", "ab");
         return;
     }
 
-    // Prompting user for complaint details
-    //jmp_buf buffer ;
 
-    //START
     while(1)
     {
         printf("Enter Complaint ID: ");
-    //scanf("%d", &complaint.complaint_id);
-
-    /*if (isdigit(complaint.complaint_id) == 0) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }*/
 
 
 
@@ -110,7 +103,7 @@ file = fopen("complaints.dat", "ab");
            printf("Invalid input! Please enter a valid number.\n");
            while (getchar() != '\n');
 
-           //longjmp(buffer,1);
+
         }
         else{ break;}
       }
@@ -119,9 +112,9 @@ file = fopen("complaints.dat", "ab");
       {
           err = 0;
           printf("Enter Student Name: ");
-          //getchar(); // To consume the leftover newline character
+
           fgets(complaint.student_name, sizeof(complaint.student_name), stdin);
-          complaint.student_name[strcspn(complaint.student_name, "\n")] = 0; // Remove newline character
+          complaint.student_name[strcspn(complaint.student_name, "\n")] = 0;
 
           for(int i=0;complaint.student_name[i]!='\0';i++)
           {
@@ -159,7 +152,7 @@ file = fopen("complaints.dat", "ab");
     while(1)
     {
         printf("Enter Department [ Computer Science , Information Technology , Electronics and Communication]: ");
-        //getchar(); // To consume newline
+
         fgets(complaint.department, sizeof(complaint.department), stdin);
         complaint.department[strcspn(complaint.department, "\n")] = 0; // Remove newline
 
@@ -172,21 +165,21 @@ file = fopen("complaints.dat", "ab");
         else {
             printf("Invalid Input!, Please Enter the Correct Department from the options ! \n");
         }
-        //printf("Department: %s \n", complaint.department);
+
 
     }
 
     while(1)
     {
         printf("Enter Year of Study [ 2010-2024: ");
-        //scanf("%d", &complaint.year_of_study);
+
 
         if(scanf("%d%c", &complaint.year_of_study, &term) != 2 || term != '\n')
         {
            printf("Invalid input! Please enter a valid number.\n");
            while (getchar() != '\n');
 
-           //longjmp(buffer,1);
+
         }
 
         else{
@@ -201,21 +194,11 @@ file = fopen("complaints.dat", "ab");
       }
 
 
-
-
-  /*  while(1)
-    {
-        printf("Enter Email: ");
-        getchar(); // Consume newline
-        fgets(complaint.email, sizeof(complaint.email), stdin);
-        complaint.email[strcspn(complaint.email, "\n")] = 0; // Remove newline
-    }
-*/
     while(1)
     {
         printf("Enter Phone Number: ");
         fgets(complaint.phone, sizeof(complaint.phone), stdin);
-        complaint.phone[strcspn(complaint.phone, "\n")] = 0; // Remove newline
+        complaint.phone[strcspn(complaint.phone, "\n")] = 0;
 
         if((strlen(complaint.phone)==10))
         {
@@ -246,7 +229,7 @@ file = fopen("complaints.dat", "ab");
     {
         printf("Enter Complaint Category (Academic, Administrative ,Infrastructure:): ");
         fgets(complaint.category, sizeof(complaint.category), stdin);
-        complaint.category[strcspn(complaint.category, "\n")] = 0; // Remove newline
+        complaint.category[strcspn(complaint.category, "\n")] = 0;
 
 
         if((strcmp(strlwr(complaint.category),"academic")==0)){break ;}
@@ -262,7 +245,7 @@ file = fopen("complaints.dat", "ab");
 
     printf("Enter Complaint Description: ");
     fgets(complaint.description, sizeof(complaint.description), stdin);
-    complaint.description[strcspn(complaint.description, "\n")] = 0; // Remove newline
+    complaint.description[strcspn(complaint.description, "\n")] = 0;
 
     while(1)
     {
@@ -270,21 +253,7 @@ file = fopen("complaints.dat", "ab");
 
         printf("Enter Date Filed (ddmmyyyy): ");
 
-        /*fgets(complaint.date_filed, sizeof(complaint.date_filed), stdin);
-        complaint.date_filed[strcspn(complaint.date_filed, "\n")] = 0; // Remove newline
-        */
 
-
-
-        //term = isValidDate(complaint.date_filed) ;
-
-
-
-        /* if (complaint.date_filed) { break ;}
-        else{
-            printf("Invalid Date \n");
-        }
-        */
 
         if(scanf("%8d%c", &complaint.date_filed, &term) != 2 || term != '\n')
         {
@@ -292,7 +261,7 @@ file = fopen("complaints.dat", "ab");
            while (getchar() != '\n');
 
 
-           //longjmp(buffer,1);
+
         }
         else{
                 if (complaint.date_filed) { break ;}
@@ -308,22 +277,16 @@ file = fopen("complaints.dat", "ab");
 
     }
 
-    /*printf("Enter Complaint Status (Pending, Resolved): ");
-    fgets(complaint.status, sizeof(complaint.status), stdin);
-    complaint.status[strcspn(complaint.status, "\n")] = 0; // Remove newline
-    */
-
-   /* printf("Enter Assigned Authority: ");
-    fgets(complaint.assigned_authority, sizeof(complaint.assigned_authority), stdin);
-    complaint.assigned_authority[strcspn(complaint.assigned_authority, "\n")] = 0; // Remove newline
-    */
 
 
-    // Write the complaint structure to the file
+
+
+
+
     fwrite(&complaint, sizeof(Complaint), 1, file);
     printf("Complaint added successfully!\n");
 
-    // Close the file
+
     fclose(file);
 
     return 0;
@@ -334,22 +297,19 @@ void viewComplaints()
     Complaint complaint;
     FILE *file;
 
-    // Open the file in read mode
-file = fopen("complaints.dat", "rb");
-    /*if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }*/
-    if (file == NULL)
-    {
-        printf("Error: No complaints found or file cannot be opened!\n");
-        return;
-    }
 
-    // Check if the file is empty
-    fseek(file, 0, SEEK_END);     // Move the file pointer to the end
-    long file_size = ftell(file); // Get the current position (size of the file)
-    rewind(file);                 // Move the file pointer back to the beginning
+file = fopen("complaints.dat", "rb");
+
+        if (file == NULL)
+       {
+            printf("Error: No complaints found or file cannot be opened!\n");
+            return;
+        }
+
+
+    fseek(file, 0, SEEK_END);
+    long file_size = ftell(file);
+    rewind(file);
 
     if (file_size == 0)
     {
@@ -358,7 +318,7 @@ file = fopen("complaints.dat", "rb");
         return;
     }
 
-    // Reading complaints from the file
+
     printf("\n--- All Complaints ---\n");
     while (fread(&complaint, sizeof(Complaint), 1, file))
     {
@@ -367,19 +327,57 @@ file = fopen("complaints.dat", "rb");
         printf("Student ID: %d\n", complaint.student_id);
         printf("Department: %s\n", complaint.department);
         printf("Year of Study: %d\n", complaint.year_of_study);
-       // printf("Email: %s\n", complaint.email);
         printf("Phone Number: %s\n", complaint.phone);
         printf("Category: %s\n", complaint.category);
         printf("Description: %s\n", complaint.description);
         printf("Date Filed: %d\n", complaint.date_filed);
-       // printf("Status: %s\n", complaint.status);
-        //printf("Assigned Authority: %s\n", complaint.assigned_authority);
+
         printf("---------------------------------\n");
     }
 
-    // Close the file
+
     fclose(file);
 }
+
+void adminMenu() {
+    int choice;
+
+    do {
+        printf("\n--- Admin Menu ---\n");
+        printf("1. View All Complaints\n");
+        printf("2. Delete a Complain \n");
+        printf("3. Generate Report \n");
+        printf("4. EXIT \n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                viewComplaints();
+
+                break;
+
+
+            case 2:
+                deleteComplaint();
+                break ;
+
+            case 3 :
+                generateReport();
+                break ;
+
+
+            case 4:
+                printf("Logging out...\n");
+                return;
+
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (1);
+}
+
 
 void modifyComplaint()
 {
@@ -387,7 +385,7 @@ void modifyComplaint()
     FILE *file, *tempFile;
     int complaint_id, found = 0;
 
-    // Open the original file in read mode
+
 file = fopen("complaints.dat", "rb");
     if (file == NULL) {
         perror("Error opening file");
@@ -399,7 +397,7 @@ file = fopen("complaints.dat", "rb");
         return;
     }
 
-    // Open a temporary file in write mode
+
     tempFile = fopen("temp.dat", "wb");
     if (tempFile == NULL)
     {
@@ -408,7 +406,7 @@ file = fopen("complaints.dat", "rb");
         return;
     }
 
-    // Prompt for the Complaint ID to modify
+
     printf("Enter the Complaint ID to modify: ");
 scanf("%d", &complaint_id);
     if (scanf("%d", &complaint_id) != 1) {
@@ -416,29 +414,29 @@ scanf("%d", &complaint_id);
         return;
     }
 
-    // Search for the complaint and modify it
+
     while (fread(&complaint, sizeof(Complaint), 1, file))
     {
         if (complaint.complaint_id == complaint_id)
         {
             found = 1;
 
-            // Modify the complaint fields
+
             printf("Modifying Complaint ID: %d\n", complaint_id);
-            // ... [existing prompts for input fields] ...
+
 
             printf("Complaint modified successfully!\n");
         }
 
-        // Write the (modified or unchanged) complaint into the temporary file
+
         fwrite(&complaint, sizeof(Complaint), 1, tempFile);
     }
 
-    // Close files
+
     fclose(file);
     fclose(tempFile);
 
-    // Replace the original file with the temporary file
+
 remove("complaints.dat");
     if (remove("complaints.dat") != 0) {
         perror("Error deleting the original file");
@@ -464,17 +462,14 @@ void deleteComplaint()
 
     // Open the original file in read mode
 file = fopen("complaints.dat", "rb");
-   /* if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }*/
+
     if (file == NULL)
     {
         printf("Error: No complaints found or file cannot be opened!\n");
         return;
     }
 
-    // Open a temporary file in write mode
+
     tempFile = fopen("temp.dat", "wb");
     if (tempFile == NULL)
     {
@@ -483,15 +478,12 @@ file = fopen("complaints.dat", "rb");
         return;
     }
 
-    // Prompt for the Complaint ID to delete
+
     printf("Enter the Complaint ID to delete: ");
     scanf("%d", &complaint_id);
-   /* if (scanf("%d", &complaint_id) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }*/
 
-    // Search for the complaint and delete it
+
+
     while (fread(&complaint, sizeof(Complaint), 1, file))
     {
         if (complaint.complaint_id == complaint_id)
@@ -508,17 +500,11 @@ file = fopen("complaints.dat", "rb");
     fclose(file);
     fclose(tempFile);
 
-    // Replace the original file
+
 remove("complaints.dat");
-   /* if (remove("complaints.dat") != 0) {
-        perror("Error deleting the original file");
-        return;
-    }*/
+
 rename("temp.dat", "complaints.dat");
-    /*if (rename("temp.dat", "complaints.dat") != 0) {
-        perror("Error renaming the temporary file");
-        return;
-    }*/
+
 
     if (!found)
     {
@@ -533,7 +519,7 @@ void searchComplaint()
     int choice, search_id, found = 0;
     char search_category[20], search_status[20];
 
-    // Open the file in read mode
+
 file = fopen("complaints.dat", "rb");
     if (file == NULL) {
         perror("Error opening file");
@@ -561,7 +547,7 @@ scanf("%d", &choice);
     switch (choice)
     {
     case 1:
-        // Search by Complaint ID
+
         printf("Enter Complaint ID: ");
 scanf("%d", &search_id);
     if (scanf("%d", &search_id) != 1) {
@@ -578,20 +564,18 @@ scanf("%d", &search_id);
                 printf("Student ID: %d\n", complaint.student_id);
                 printf("Department: %s\n", complaint.department);
                 printf("Year of Study: %d\n", complaint.year_of_study);
-                //printf("Email: %s\n", complaint.email);
                 printf("Phone Number: %s\n", complaint.phone);
                 printf("Category: %s\n", complaint.category);
                 printf("Description: %s\n", complaint.description);
                 printf("Date Filed: %d\n", complaint.date_filed);
-                //printf("Status: %s\n", complaint.status);
-                //printf("Assigned Authority: %s\n", complaint.assigned_authority);
+
                 break;
             }
         }
         break;
 
     case 2:
-        // Search by Student ID
+
         printf("Enter Student ID: ");
 scanf("%d", &search_id);
     if (scanf("%d", &search_id) != 1) {
@@ -608,18 +592,17 @@ scanf("%d", &search_id);
                 printf("Department: %s\n", complaint.department);
                 printf("Year of Study: %d\n", complaint.year_of_study);
                 printf("Category: %s\n", complaint.category);
-                //printf("Status: %s\n", complaint.status);
                 printf("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             }
         }
         break;
 
     case 3:
-        // Search by Complaint Category
+
         printf("Enter Complaint Category: ");
-        getchar(); // Consume newline
+        getchar();
         fgets(search_category, sizeof(search_category), stdin);
-        search_category[strcspn(search_category, "\n")] = 0; // Remove newline
+        search_category[strcspn(search_category, "\n")] = 0;
         while (fread(&complaint, sizeof(Complaint), 1, file))
         {
             if (strcmp(complaint.category, search_category) == 0)
@@ -628,18 +611,18 @@ scanf("%d", &search_id);
                 printf("\nComplaint ID: %d\n", complaint.complaint_id);
                 printf("Student Name: %s\n", complaint.student_name);
                 printf("Category: %s\n", complaint.category);
-               // printf("Status: %s\n", complaint.status);
+
                 printf("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             }
         }
         break;
 
     case 4:
-        // Search by Complaint Status
+
         printf("Enter Complaint Status (Pending, Resolved): ");
-        getchar(); // Consume newline
+        getchar();
         fgets(search_status, sizeof(search_status), stdin);
-        search_status[strcspn(search_status, "\n")] = 0; // Remove newline
+        search_status[strcspn(search_status, "\n")] = 0;
         while (fread(&complaint, sizeof(Complaint), 1, file))
         {
             if (strcmp(complaint.status, search_status) == 0)
@@ -647,7 +630,6 @@ scanf("%d", &search_id);
                 found = 1;
                 printf("\nComplaint ID: %d\n", complaint.complaint_id);
                 printf("Student Name: %s\n", complaint.student_name);
-               // printf("Status: %s\n", complaint.status);
                 printf("------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
             }
         }
@@ -662,7 +644,7 @@ scanf("%d", &search_id);
         printf("No complaints found matching the search criteria.\n");
     }
 
-    // Close the file
+
     fclose(file);
 }
 
@@ -673,8 +655,7 @@ void changeComplaintStatus()
     int complaint_id, found = 0;
     char new_status[20];
 
-    // Open the original file in read mode
-file = fopen("complaints.dat", "rb");
+    file = fopen("complaints.dat", "rb");
     if (file == NULL) {
         perror("Error opening file");
         return;
@@ -685,7 +666,7 @@ file = fopen("complaints.dat", "rb");
         return;
     }
 
-    // Open a temporary file in write mode
+
     tempFile = fopen("temp.dat", "wb");
     if (tempFile == NULL)
     {
@@ -694,7 +675,7 @@ file = fopen("complaints.dat", "rb");
         return;
     }
 
-    // Prompt for the Complaint ID to change status
+
     printf("Enter the Complaint ID to change status: ");
 scanf("%d", &complaint_id);
     if (scanf("%d", &complaint_id) != 1) {
@@ -702,7 +683,7 @@ scanf("%d", &complaint_id);
         return;
     }
 
-    // Search for the complaint and change its status
+
     while (fread(&complaint, sizeof(Complaint), 1, file))
     {
         if (complaint.complaint_id == complaint_id)
@@ -710,23 +691,23 @@ scanf("%d", &complaint_id);
             found = 1;
             printf("Current Status: %s\n", complaint.status);
             printf("Enter new status: ");
-            getchar(); // Consume newline
+            getchar();
             fgets(new_status, sizeof(new_status), stdin);
-            new_status[strcspn(new_status, "\n")] = 0; // Remove newline
+            new_status[strcspn(new_status, "\n")] = 0;
 
-            // Update status
+
             strcpy(complaint.status, new_status);
             printf("Status updated successfully!\n");
         }
 
-        // Write complaint (modified or not) into the temporary file
+
         fwrite(&complaint, sizeof(Complaint), 1, tempFile);
     }
 
     fclose(file);
     fclose(tempFile);
 
-    // Replace the original file
+
 remove("complaints.dat");
     if (remove("complaints.dat") != 0) {
         perror("Error deleting the original file");
@@ -753,34 +734,27 @@ void generateReport()
     int pending_count = 0, resolved_count = 0;
     int cs_count = 0, it_count = 0, ece_count = 0;
 
-    // Open the file in read mode
+
 file = fopen("complaints.dat", "rb");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }
+
     if (file == NULL)
     {
         printf("Error: No complaints found or file cannot be opened!\n");
         return;
     }
 
-    // Display report options
+
     printf("Generate Report by:\n");
     printf("1. Complaints by Category\n");
     printf("2. Complaints by Department\n");
-    //printf("3. Status Report\n");
     printf("Enter your choice: ");
-scanf("%d", &choice);
-    if (scanf("%d", &choice) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }
+    scanf("%d", &choice);
 
-    // Initialize counters
+
+
     while (fread(&complaint, sizeof(Complaint), 1, file))
     {
-        // Categorize complaints by type
+
         if (strcmp(complaint.category, "Academic") == 0)
             academic_count++;
         else if (strcmp(complaint.category, "Administrative") == 0)
@@ -788,7 +762,6 @@ scanf("%d", &choice);
         else if (strcmp(complaint.category, "Infrastructure") == 0)
             infra_count++;
 
-        // Count complaints by department
         if (strcmp(complaint.department, "Computer Science") == 0)
             cs_count++;
         else if (strcmp(complaint.department, "Information Technology") == 0)
@@ -796,17 +769,13 @@ scanf("%d", &choice);
         else if (strcmp(complaint.department, "Electronics and Communication") == 0)
             ece_count++;
 
-        // Count complaints by status
-        if (strcmp(complaint.status, "Pending") == 0)
-            pending_count++;
-        else if (strcmp(complaint.status, "Resolved") == 0)
-            resolved_count++;
+       resolved_count++;
     }
 
-    // Close the file
+
     fclose(file);
 
-    // Generate the selected report
+
     switch (choice)
     {
     case 1:
@@ -836,30 +805,28 @@ scanf("%d", &choice);
 
 void displayMenu()
 {
-    printf("\nUniversity Complaint Management System\n");
-    printf("1. Add Complaint\n");
-    printf("2. Modify Complaint\n");
-    printf("3. View Complaints\n");
-    printf("4. Delete Complaint\n");
-    printf("5. Search Complaint\n");
-    printf("6. Change Complaint Status\n");
-    printf("7. Generate Report\n");
-    printf("8. Exit\n");
+    printf("\n University Complaint Management System \n");
+    printf("1. Add Complaint \n");
+    printf("2. Modify Complaint \n");
+    printf("3. Search Complaint \n");
+    printf("4. Exit\n");
     printf("Enter your choice: \n\n");
     printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 }
 
-char currentUser[MAX_LEN] = "";  // Global variable to store the logged-in user
 
-// Function prototypes
+
+char currentUser[MAX_LEN] = "";
+
+
 void createAccount();
 int login();
 void editPassword();
 void complaintManagementSystem();
-//void addComplaint();
-//void viewComplaints();
 
-// Login system functions
+
+
+
 void createAccount() {
     FILE *file = fopen(FILE_NAME, "a");
     if (file == NULL) {
@@ -893,11 +860,19 @@ int login() {
     printf("Enter password: ");
     scanf("%s", password);
 
+    if (strcmp(username, ADMIN_USERNAME) == 0 && strcmp(password, ADMIN_PASSWORD) == 0) {
+
+
+        printf("Admin login successful!\n");
+        adminMenu();
+        return 0;
+    }
+
     Account account;
     while (fscanf(file, "%s %s", account.username, account.password) != EOF) {
         if (strcmp(account.username, username) == 0 && strcmp(account.password, password) == 0) {
             fclose(file);
-            strcpy(currentUser, username);  // Store the logged-in user's name
+            strcpy(currentUser, username);
             printf("Login successful!\n");
             return 1;
         }
@@ -951,8 +926,8 @@ void editPassword() {
     printf("Password updated successfully!\n");
 }
 
-// Complaint management functions
- complaintManagementSystem()
+
+void complaintManagementSystem()
 {
     int choice;
 
@@ -960,38 +935,24 @@ void editPassword() {
     {
         displayMenu();
         scanf("%d", &choice);
-    /*if (scanf("%d", &choice) != 1) {
-        printf("Invalid input! Please enter a valid number.\n");
-        return;
-    }*/
+
 
         switch (choice)
         {
         case 1:
-            addComplaint(); // Call the function to add a new complaint
-
+            addComplaint();
             break;
         case 2:
-            modifyComplaint(); // Call the function to modify a complaint
+            modifyComplaint();
             break;
+
+
         case 3:
-            viewComplaints(); // Call the function to view all complaints
+            searchComplaint();
             break;
         case 4:
-            deleteComplaint(); // Call the function to delete a complaint
-            break;
-        case 5:
-            searchComplaint(); // Call the function to search a complaint
-            break;
-        case 6:
-            changeComplaintStatus(); // Call the function to change complaint status
-            break;
-        case 7:
-            generateReport(); // Call the function to generate reports
-            break;
-        case 8:
             printf("Exiting the system.\n");
-            break;
+            return;
         default:
             printf("Invalid choice. Please try again.\n");
         }
@@ -1022,8 +983,9 @@ int main() {
                 break;
             case 2:
                 if (login()) {
-                    complaintManagementSystem();  // Redirect to the complaint system
+                    complaintManagementSystem();
                 }
+
                 break;
             case 3:
                 editPassword();
